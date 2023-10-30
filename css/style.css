@@ -8,7 +8,7 @@
   font-size: 62.5%;
 
   --ff-pramary: "Poppins", sans-serif;
-  --text-color: #aaa8a8;
+  --text-color: #fffcfc;
 
   --hue: 194;
   --primary-color: hsl(var(--hue), 1000%, 63%);
@@ -46,4 +46,93 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 2.5rem 0;
+}
+
+header h1 {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+.search input {
+  height: 3.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.search button {
+  background-color: var(--primary-color);
+  border-radius: 0 0.4rem 0.4rem 0;
+  height: 3.2rem;
+  border: none;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.search button:hover {
+  filter: brightness(1.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  box-shadow: 0 0 .4rem .2rem rgba(255, 255, 255, 0.3);
+}
+
+table * {
+  font-size: 1.4rem;
+  color: var(--text-color);
+}
+
+table th {
+  background: rgba(114, 54, 255, 0.911);
+  text-align: left;
+  font-weight: normal;
+  padding: 1.5rem;
+}
+table th:first-child {
+  border-top-left-radius: 0.4rem;
+}
+
+
+table td {
+  padding: 1.5rem;
+  text-align: left;
+}
+td.user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+td.user a {
+  text-decoration: none;
+}
+td.user a p {
+  font-weight: bold;
+}
+
+td.user img {
+  width: 5rem;
+  height: 5rem;
+
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+table tr:nth-child(even) {
+  background: #dddddd45;
+}
+
+table tr:nth-child(odd) {
+  background: #eeeeee67;
+}
+td .remove {
+  background: none;
+  border: none;
+  color: red;
 }
