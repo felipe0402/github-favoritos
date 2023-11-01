@@ -1,4 +1,3 @@
-// Classe que vai conter a logica de dados
-// Como os dados serao estruturados
+import { Favorites } from "./Favorites.js";
 
-// Classe que vai cria a visualizaçao e evento Html
+new Favorites("#app");
