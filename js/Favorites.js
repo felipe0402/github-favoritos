@@ -3,6 +3,26 @@
 export class Favorites {
   constructor(root) {
     this.root = document.querySelector(root);
+    this.tbody = this.root.querySelector("table tbody");
+
+    this.load();
+  }
+
+  load() {
+    this.entries = [
+      {
+        login: "felipe0402",
+        nome: "Felipe Andrade",
+        public_repos: "95",
+        followers: 20931,
+      },
+      {
+        login: "pablotelles",
+        nome: "Pablo Teles",
+        public_repos: "78",
+        followers: 2931,
+      },
+    ];
   }
 }
 
@@ -10,5 +30,51 @@ export class Favorites {
 export class FavoritesView extends Favorites {
   constructor(root) {
     super(root);
+    this.update();
+  }
+
+  update() {
+    this.removeAllTr();
+
+    this.entries.forEach((user) => {
+      const row = this.creareRow();
+      row.querySelector(
+        ".user img"
+      ).src = `https://github.com/${user.login}.png`;
+
+      row.querySelector(".user img").alt = `imagem de ${user.name}`;
+      row.querySelector(".user p").textContent = user.nome;
+      row.querySelector(".user span").textContent = user.login;
+      row.querySelector(".repositories").textContent = user.public_repos;
+      row.querySelector(".followers").textContent = user.followers;
+
+      this.tbody.append(row);
+
+      console.log(row);
+    });
+  }
+
+  creareRow() {
+    const tr = document.createElement("tr");
+    const content = `  
+    <td class="user">
+      <img src="https://github.com/felipe0402.png" alt="" />
+      <a href="https://github.com/felipe0402" target="_blank">
+        <p>Felipe Andrade</p>
+        <span>Felipe0402</span>
+      </a>
+    </td>
+    <td class="repositories">98</td>
+    <td class="followers">20892</td>
+    <td><button class="remove">&times;</button></td>`;
+
+    tr.innerHTML = content;
+    return tr;
+  }
+
+  removeAllTr() {
+    this.tbody.querySelectorAll("tr").forEach((tr) => {
+      tr.remove();
+    });
   }
 }
