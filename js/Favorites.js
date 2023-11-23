@@ -1,17 +1,4 @@
-export class GitHubUser {
-  static searche(username) {
-    const endPoint = `https://api.github.com/users/${username}`;
-
-    return fetch(endPoint)
-      .then((data) => data.json())
-      .then(({ login, name, public_repos, followers }) => ({
-        login,
-        name,
-        public_repos,
-        followers,
-      }));
-  }
-}
+import { GitHubUser } from "./GitHubUser.js";
 
 // Classe que vai conter a logica de dados
 // Como os dados serao estruturados
@@ -25,11 +12,33 @@ export class Favorites {
   }
 
   load() {
-    this.entries = JSON.parse(localStorage.getItem("github-favorites:")) || [];
+    this.entries = JSON.parse(localStorage.getItem("@github-favorites:")) || [];
     console.log(this.entries);
   }
+  save() {
+    localStorage.setItem("@github-favorites:", JSON.stringify(this.entries));
+  }
+
   async add(username) {
-    const user = await GitHubUser.searche(username);
+    try {
+      const userExists = this.entries.find((entry) => entry.login === username);
+
+      if (userExists) {
+        throw new Error("Usuario ja cadastrado");
+      }
+
+      const user = await GitHubUser.searche(username);
+
+      if (user.login === undefined) {
+        throw new Error("Usuario nao Encontrado");
+      }
+
+      this.entries = [user, ...this.entries];
+      this.update();
+      this.save();
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   delete(user) {
@@ -38,6 +47,7 @@ export class Favorites {
     );
     this.entries = filteRedRentries;
     this.update();
+    this.save();
   }
 }
 
@@ -69,6 +79,7 @@ export class FavoritesView extends Favorites {
 
       row.querySelector(".user img").alt = `imagem de ${user.name}`;
       row.querySelector(".user p").textContent = user.nome;
+      row.querySelector(".user a").href = `https://github.com/${user.login}`;
       row.querySelector(".user span").textContent = user.login;
       row.querySelector(".repositories").textContent = user.public_repos;
       row.querySelector(".followers").textContent = user.followers;
